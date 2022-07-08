@@ -1,10 +1,11 @@
 #include "seopenglwidget.h"
-float vertices[] =
-{
-    0.5f, 0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    -0.5f, -0.5f, 0.0f,
-    -0.5f, 0.5f, 0.0f
+float vertices[] = {
+//Position           Color
+0.5f, 0.5f, 0.0f,    1.0f, 0.0f, 0.0f,
+0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,
+-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,
+-0.5f, 0.5f, 0.0f,   0.5f, 0.5f, 0.5f
+
 };
 
 unsigned int indices [] =
@@ -74,9 +75,12 @@ void seopenglwidget::initializeGL()
     //Find attribute location in Shader
     GLint posLocation = shaderProgram.attributeLocation("aPos");
     //Tell GPU how to interpete buffer
-    glVertexAttribPointer(posLocation,3, GL_FLOAT, GL_FALSE, 3*sizeof (float), 0);
+    glVertexAttribPointer(posLocation,3, GL_FLOAT, GL_FALSE, 6*sizeof (float), 0);
     //Enable the firste value of VAO
     glEnableVertexAttribArray(posLocation);
+    //color attribute
+    glVertexAttribPointer(1,3,GL_FLOAT, GL_FALSE, 6 *  sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
 }
 
