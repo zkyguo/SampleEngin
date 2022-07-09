@@ -3,4 +3,7 @@
         <file>fragShader.frag</file>
         <file>vertexShader.vert</file>
     </qresource>
+    <qresource prefix="/Texture">
+        <file>TextureRainbow.jpg</file>
+    </qresource>
 </RCC>

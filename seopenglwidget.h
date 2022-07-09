@@ -4,6 +4,8 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_4_5_Core>
 #include <QOpenGLShaderProgram>
+#include <QOpenGLTexture>
+#include <QImage>
 
 class seopenglwidget : public QOpenGLWidget, QOpenGLFunctions_4_5_Core
 {
@@ -24,6 +26,7 @@ public slots:
 private:
     Shape m_shape;
     QOpenGLShaderProgram shaderProgram;
+    QOpenGLTexture * texture;
 
 };
 

@@ -1,10 +1,10 @@
 #include "seopenglwidget.h"
 float vertices[] = {
-//Position           Color
-0.5f, 0.5f, 0.0f,    1.0f, 0.0f, 0.0f,
-0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,
--0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,
--0.5f, 0.5f, 0.0f,   0.5f, 0.5f, 0.5f
+//Position           Color               Tex cord
+0.5f, 0.5f, 0.0f,    1.0f, 0.0f, 0.0f,   1.0f,1.0f,
+0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f,0.0f,
+-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,  0.0f,0.0f,
+-0.5f, 0.5f, 0.0f,   0.5f, 0.5f, 0.5f,   0.0f,1.0f
 
 };
 
@@ -75,12 +75,16 @@ void seopenglwidget::initializeGL()
     //Find attribute location in Shader
     GLint posLocation = shaderProgram.attributeLocation("aPos");
     //Tell GPU how to interpete buffer
-    glVertexAttribPointer(posLocation,3, GL_FLOAT, GL_FALSE, 6*sizeof (float), 0);
+    glVertexAttribPointer(posLocation,3, GL_FLOAT, GL_FALSE, 8*sizeof (float), 0);
     //Enable the firste value of VAO
     glEnableVertexAttribArray(posLocation);
     //color attribute
-    glVertexAttribPointer(1,3,GL_FLOAT, GL_FALSE, 6 *  sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1,3,GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2,2,GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+    texture = new QOpenGLTexture(QImage(":/Texture/TextureRainbow.jpg").mirrored());
 
 }
 
@@ -94,9 +98,11 @@ void seopenglwidget::paintGL()
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     shaderProgram.bind();
+
     switch(m_shape)
     {
         case Rect:
+            texture->bind(0);
             glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
         break;
     }
